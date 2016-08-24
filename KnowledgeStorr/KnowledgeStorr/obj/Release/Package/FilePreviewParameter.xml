@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default/KnowledgeStorr" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\James\\documents\\visual\ studio\ 2015\\Projects\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\James\\documents\\visual\ studio\ 2015\\Projects\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=localhost;Initial Catalog=KnowledgeStorr;User ID=KSAdmin;Password=Harewood21" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\James\\documents\\visual\ studio\ 2015\\Projects\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="KSContext-Web.config Connection String" description="" value="Data Source=localhost;Initial Catalog=KnowledgeStorr;User ID=KSAdmin;Password=Harewood21" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\James\\documents\\visual\ studio\ 2015\\Projects\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='KSContext']/@connectionString" />
+  </parameter>
+</parameters>

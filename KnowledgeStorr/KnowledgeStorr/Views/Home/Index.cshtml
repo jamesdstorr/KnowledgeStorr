@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Knowledge Storr</h1>    
+    <p class="lead">A lite knowledge base web application by James Storr</p>    
+</div>
+
+<div class="container">
+    @Html.Action("ArticlesFilter", "Articles")
+
+</div>
+
