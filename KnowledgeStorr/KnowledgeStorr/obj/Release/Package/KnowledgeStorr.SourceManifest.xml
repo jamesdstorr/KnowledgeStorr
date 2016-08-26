@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
-  <IisApp path="C:\Users\James\documents\visual studio 2015\Projects\KnowledgeStorr\KnowledgeStorr\obj\Release\Package\PackageTmp" />
-  <setAcl path="C:\Users\James\documents\visual studio 2015\Projects\KnowledgeStorr\KnowledgeStorr\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
-  <setAcl path="C:\Users\James\documents\visual studio 2015\Projects\KnowledgeStorr\KnowledgeStorr\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+  <IisApp path="C:\Users\604117500\Downloads\KnowledgeStorr-master\KnowledgeStorr-master\KnowledgeStorr\KnowledgeStorr\obj\Release\Package\PackageTmp" managedRuntimeVersion="v4.0" />
+  <setAcl path="C:\Users\604117500\Downloads\KnowledgeStorr-master\KnowledgeStorr-master\KnowledgeStorr\KnowledgeStorr\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\604117500\Downloads\KnowledgeStorr-master\KnowledgeStorr-master\KnowledgeStorr\KnowledgeStorr\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
 </sitemanifest>

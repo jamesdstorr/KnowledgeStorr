@@ -15,6 +15,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ArticleCreated)
+    @Html.HiddenFor(model => model.UserId)
     
     <div class="form-horizontal">       
         <hr />
@@ -37,13 +39,13 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.Label("Article Created", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ArticleCreated, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ArticleCreated, "", new { @class = "text-danger" })
             </div>
-        </div>     
+        </div>*@     
 
         <div class="form-group">
             @Html.Label("Category", "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -80,6 +82,25 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#CategoryId").change(function () {
+            var catId = $(this).val();
+            var subItems = "";
+            $.getJSON("@Url.Action("SubCategoryFilter", "Articles")", { categoryID: catId }, function (data) {
+                $.each(data, function (index, item) {
+                    subItems += "<option value='" + item.SubcategoryId + "'>" + item.SubcategoryName + "</option>"
+                });
+                $('#SubcategoryId').html(subItems);
+            });
+        });
+
+    });
+
+</script>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

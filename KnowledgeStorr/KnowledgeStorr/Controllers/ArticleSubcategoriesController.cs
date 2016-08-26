@@ -18,7 +18,11 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleSubcategories
         public ActionResult Index()
         {
-            var subcategories = db.Subcategories.Include(a => a.ArticleCategory);
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            var subcategories = db.Subcategories.Where(a=>a.CategoryId!=1).Include(a => a.ArticleCategory);
             return View(subcategories.ToList());
         }
 
@@ -40,7 +44,11 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleSubcategories/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            ViewBag.CategoryId = new SelectList(db.Categories.Where(a=>a.CategoryId !=1 ), "CategoryId", "CategoryName");
             return View();
         }
 
@@ -65,6 +73,10 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleSubcategories/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -98,6 +110,10 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleSubcategories/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

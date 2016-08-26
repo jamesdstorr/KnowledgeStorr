@@ -18,7 +18,11 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleCategories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            return View(db.Categories.Where(c=>c.CategoryId != 1).ToList());
         }
 
         // GET: ArticleCategories/Details/5
@@ -39,6 +43,10 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleCategories/Create
         public ActionResult Create()
         {
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             return View();
         }
 
@@ -62,6 +70,10 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleCategories/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,6 +93,7 @@ namespace KnowledgeStorr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CategoryId,CategoryName")] ArticleCategory articleCategory)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(articleCategory).State = EntityState.Modified;
@@ -93,6 +106,10 @@ namespace KnowledgeStorr.Controllers
         // GET: ArticleCategories/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (this.Session["User"] == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

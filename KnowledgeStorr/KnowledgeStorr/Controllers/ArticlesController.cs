@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using KnowledgeStorr.Data_Access;
 using KnowledgeStorr.Models;
 using System.Diagnostics;
+using PagedList;
 
 namespace KnowledgeStorr.Controllers
 {
@@ -25,8 +26,26 @@ namespace KnowledgeStorr.Controllers
             return PartialView(viewModel);
         }
 
-        public ActionResult ArticlesResults(int CategoryId, int SubcategoryId, string searchString)
+        public ActionResult ArticlesResults(int CategoryId, int? SubcategoryId, string searchString, int? page)
         {
+           
+            ViewBag.CategoryId = CategoryId;
+            ViewBag.SubcategoryId = SubcategoryId;
+            ViewBag.SearchString = searchString;
+            
+            Debug.WriteLine("CategoryID is " + CategoryId);
+            if(CategoryId == 1)
+            {
+                var articles = from a in db.Articles                                                            
+                               select a;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    articles = articles.Where(a => a.ArticleDescription.Contains(searchString) || a.ArticleContents.Contains(searchString) || a.ArticleName.Contains(searchString));
+                }
+                
+                return PartialView(articles.ToList());
+            }
+
             if (SubcategoryId != 0)
             {
                 var articles = from a in db.Articles
@@ -36,7 +55,7 @@ namespace KnowledgeStorr.Controllers
                                select a;
                 if(!String.IsNullOrEmpty(searchString))
                 {
-                    articles = articles.Where(a => a.ArticleDescription.Contains(searchString) || a.ArticleContents.Contains(searchString));
+                    articles = articles.Where(a => a.ArticleDescription.Contains(searchString) || a.ArticleContents.Contains(searchString) || a.ArticleName.Contains(searchString));
                 }
 
                 return PartialView(articles.ToList());
@@ -50,7 +69,7 @@ namespace KnowledgeStorr.Controllers
 
                   if(!String.IsNullOrEmpty(searchString))
                 {
-                    articles = articles.Where(a => a.ArticleDescription.Contains(searchString) || a.ArticleContents.Contains(searchString));
+                    articles = articles.Where(a => a.ArticleDescription.Contains(searchString) || a.ArticleContents.Contains(searchString) || a.ArticleName.Contains(searchString));
                 }
 
                 return PartialView(articles.ToList());
@@ -82,7 +101,7 @@ namespace KnowledgeStorr.Controllers
             }
             else
             {
-                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName");
+                ViewBag.CategoryId = new SelectList(db.Categories.Where(a=>a.CategoryId!=1), "CategoryId", "CategoryName");
                 ArticleCreateViewModel viewModel = new ArticleCreateViewModel();
                 viewModel.subcategories = new List<ArticleSubcategory>();
                 return View(viewModel);
@@ -125,7 +144,8 @@ namespace KnowledgeStorr.Controllers
             {
                 db.Articles.Add(article);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Articles", new { id = article.ArticleId });
+                //return RedirectToAction("Index", "Home");
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", article.CategoryId);
@@ -140,13 +160,17 @@ namespace KnowledgeStorr.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if(this.Session["User"] ==  null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             Article article = db.Articles.Find(id);
             if (article == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", article.CategoryId);
-            ViewBag.SubcategoryId = new SelectList(db.Subcategories, "SubcategoryId", "SubcategoryName", article.SubcategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories.Where(a=>a.CategoryId!=1), "CategoryId", "CategoryName", article.CategoryId);
+            ViewBag.SubcategoryId = new SelectList(db.Subcategories.Where(a=>a.CategoryId == article.CategoryId), "SubcategoryId", "SubcategoryName", article.SubcategoryId);
             return View(article);
         }
 
@@ -155,8 +179,10 @@ namespace KnowledgeStorr.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ArticleId,ArticleName,ArticleDescription,ArticleCreated,ArticleContents,CategoryId,SubcategoryId")] Article article)
+        public ActionResult Edit([Bind(Include = "ArticleId,ArticleName,ArticleDescription,ArticleCreated,ArticleContents,CategoryId,SubcategoryId,UserId")] Article article)
         {
+            //Models.User user = this.Session["User"] as Models.User;
+            //article.UserId = user.UserId;
             if (ModelState.IsValid)
             {
                 db.Entry(article).State = EntityState.Modified;
@@ -164,7 +190,7 @@ namespace KnowledgeStorr.Controllers
                 return RedirectToAction("Details","Articles", new { id = article.ArticleId });
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", article.CategoryId);
-            ViewBag.SubcategoryId = new SelectList(db.Subcategories, "SubcategoryId", "SubcategoryName", article.SubcategoryId);
+            ViewBag.SubcategoryId = new SelectList(db.Subcategories.Where(a=>a.CategoryId == article.CategoryId), "SubcategoryId", "SubcategoryName", article.SubcategoryId);
             return View(article);
         }
 
@@ -202,5 +228,6 @@ namespace KnowledgeStorr.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

@@ -10,7 +10,14 @@ namespace KnowledgeStorr.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if(this.Session["User"]== null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            else
+            {
+                return View();
+            }          
         }
 
         public ActionResult About()

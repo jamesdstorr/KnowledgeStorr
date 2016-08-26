@@ -6,6 +6,17 @@
 
 <h2>Login</h2>
 
+<div>
+    @{if(ViewBag.PasswordError != null) 
+      {
+          <p class="text-danger">@ViewBag.PasswordError</p>
+      }
+      if (ViewBag.NoAccount != null)
+      {
+          <p class="text-danger">@ViewBag.noAccount</p>      
+      }
+    } 
+</div>
 
 @using (Html.BeginForm()) 
 {
@@ -35,10 +46,6 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back", "Index","Home")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

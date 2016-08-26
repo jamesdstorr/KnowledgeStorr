@@ -29,14 +29,24 @@ namespace KnowledgeStorr.Controllers
         [HttpPost]
         public ActionResult Login(string userName, string password)
         {
-            Models.User user = db.Users.Where(u => u.UserName == userName).First();
-            if (user.Password == password)
+            if(db.Users.Where(u=>u.UserName == userName).Count() > 0)
             {
-                this.Session["User"] = user;
-                return RedirectToAction("Index", "Home");
-            }
+                Models.User user = db.Users.Where(u => u.UserName == userName).First();
+                if (user.Password == password)
+                {
+                    this.Session["User"] = user;
+                    this.Session.Timeout = 60;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.PasswordError = "Password is incorrect";
+                    return View();
+                }
+            }            
             else
             {
+                ViewBag.NoAccount = "An account for the User Name doesn't exit. If you don't have an account, click Register";
                 return View();
             }
         }

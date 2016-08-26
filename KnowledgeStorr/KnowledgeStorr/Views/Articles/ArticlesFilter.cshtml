@@ -18,6 +18,7 @@
         <div class="form-group">
             @Html.Label("Category", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                
                 @Html.DropDownList("CategoryId", null, "Select Category", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.categories, "", new { @class = "text-danger" })
             </div>
@@ -54,7 +55,8 @@
 <script type="text/javascript">
     $(function () {
 
-        $("#CategoryId").change(function(){
+        $("#CategoryId").change(function () {
+            
             var catId = $(this).val();
             var subItems = "";
             $.getJSON("@Url.Action("SubCategoryFilter", "Articles")", { categoryID: catId }, function (data) {
