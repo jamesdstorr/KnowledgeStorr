@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MCSKBContext-Web.config Connection String" description="MCSKBContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=localhost;Initial Catalog=MCSKB;User id=MCSKBAdmin;Password=Harewood21" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\604117500\\Downloads\\KnowledgeStorr-master\\KnowledgeStorr-master\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MCSKBContext']/@connectionString" />
+  </parameter>
+  <parameter name="CMSKBContext-Web.config Connection String" description="CMSKBContext Connection String used in web.config by the application to access the database." defaultValue="CMSKBContext_ConnectionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\604117500\\Downloads\\KnowledgeStorr-master\\KnowledgeStorr-master\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='CMSKBContext']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="DefaultConnection_ConnectionString" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\604117500\\Downloads\\KnowledgeStorr-master\\KnowledgeStorr-master\\KnowledgeStorr\\KnowledgeStorr\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

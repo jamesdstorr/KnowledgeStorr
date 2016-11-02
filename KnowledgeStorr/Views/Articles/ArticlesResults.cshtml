@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<KnowledgeStorr.Models.Article>
+@using PagedList.Mvc;
+
+
+
+<h3>Article Search Results</h3>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Category")
+        </th>
+        <th>
+            @Html.DisplayName("Subcategory")
+        </th>
+        <th>
+            @Html.DisplayName("Article Name")
+        </th>
+        <th>
+            @Html.DisplayName("Description")
+        </th>
+        <th>
+            @Html.DisplayName("Created On")
+        </th>        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.articleCategory.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.articleSubcategory.SubcategoryName)
+        </td>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.ArticleName).ToHtmlString(), "Details", new { id = item.ArticleId }) 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleCreated)
+        </td>        
+        <td>
+            @Html.ActionLink("Edit Article", "Edit", new { id=item.ArticleId }) |           
+            @Html.ActionLink("Delete Article", "Delete", new { id=item.ArticleId })
+        </td>
+    </tr>
+}
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ArticlesResults",
+            new { page, Category_Id = ViewBag.Category, Subcategory_Id = ViewBag.SubCategory, searchString = ViewBag.SearchString}))

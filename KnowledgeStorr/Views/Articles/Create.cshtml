@@ -1,0 +1,114 @@
+﻿<script type="text/javascript" src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script type="text/javascript" src="~/Scripts/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+
+
+@model KnowledgeStorr.Models.ArticleCreateViewModel
+
+@{
+    ViewBag.Title = "New Article";
+}
+
+<h2>Create New Article</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Article Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.article.ArticleName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.article.ArticleName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Article Description", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.article.ArticleDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.article.ArticleDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Created On", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.article.ArticleCreated, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.article.ArticleCreated, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Category", "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoryId", null, "Select Category", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.article.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Subcategory", "Subcategory", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SubcategoryId", new SelectList(Model.subcategories), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => Model.subcategories, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Article Contents", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextArea("ArticleContents", new { @id = "editor1", htmlAttributes = new { @class = "ckeditor" } })
+                @Html.ValidationMessageFor(model => model.article.ArticleContents, "", new { @class = "text-danger" })
+                <script>CKEDITOR.replace('editor1');</script>
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.Label("Article Contents", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <textarea id="ArticleContents"></textarea>
+                    <script type="text/javascript"> CKEDITOR.replace('ArticleContents')</script>
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index", "Home", null, new { @class = "btn btn-default" })
+</div>
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#CategoryId").change(function () {
+            var catId = $(this).val();
+            var subItems = "";
+            $.getJSON("@Url.Action("SubCategoryFilter", "Articles")", { categoryID: catId }, function (data) {
+                $.each(data, function (index, item) {
+                    subItems += "<option value='" + item.SubcategoryId + "'>" + item.SubcategoryName + "</option>"
+                });
+                $('#SubcategoryId').html(subItems);
+            });
+        });
+
+    });
+
+</script>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

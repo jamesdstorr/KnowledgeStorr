@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div style="display: table-row;">
+    <div class="jumbotron" style="vertical-align:top;  display: table-cell;">
+        <h1>MCS Knowledge Base</h1>
+        
+    </div>
+    <div style="display: table-cell;">
+        <p class="col-lg-6"> <img height="250" width="300" src="~/Content/Images/book-1421245.jpg" /></p> 
+    </div>
+</div>
+<div>
+    <h2>Latest Articles</h2>
+    @Html.Action("LatestArticles", "Articles");
+</div>
+

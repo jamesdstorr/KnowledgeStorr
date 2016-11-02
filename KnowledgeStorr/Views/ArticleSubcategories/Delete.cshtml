@@ -1,0 +1,40 @@
+﻿@model KnowledgeStorr.Models.ArticleSubcategory
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ArticleSubcategory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Category Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArticleCategory.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Subcategory Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubcategoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<KnowledgeStorr.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.articleCategory.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.articleSubcategory.SubcategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleContents)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.articleCategory.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.articleSubcategory.SubcategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArticleContents)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleId })
+        </td>
+    </tr>
+}
+
+</table>

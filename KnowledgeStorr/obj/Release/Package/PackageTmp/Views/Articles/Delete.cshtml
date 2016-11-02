@@ -1,0 +1,50 @@
+﻿@model KnowledgeStorr.Models.Article
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">  
+        
+        <dt>
+            @Html.DisplayName("Article Name")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArticleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Description")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArticleDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Created On")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArticleCreated)
+        </dd>
+      
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back", "Index", "Home", new {@class="btn btn-default"})
+        </div>
+    }
+</div>
